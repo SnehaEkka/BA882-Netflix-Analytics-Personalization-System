@@ -14,9 +14,8 @@ db = 'ba882_project'
 schema = "stage"
 db_schema = f"{db}.{schema}"
 
-
 @functions_framework.http
-def main(request):
+def task(request):
 
     # instantiate the services 
     sm = secretmanager.SecretManagerServiceClient()
@@ -46,59 +45,6 @@ def main(request):
     md.sql(f"CREATE SCHEMA IF NOT EXISTS {db_schema};") 
 
     ##################################################### create the core tables in stage
-
-    # YouTube API
-    raw_tbl_name = f"{db_schema}.youtube_api"
-    raw_tbl_sql = f"""
-    CREATE TABLE IF NOT EXISTS {raw_tbl_name} (
-        video_id VARCHAR PRIMARY KEY			 
-        ,title VARCHAR
-        ,description VARCHAR
-        ,published_at TIMESTAMP
-        ,views INT
-        ,likes INT
-        ,favorites INT
-        ,comments_count INT
-        ,comments VARCHAR[]
-        ,thumbnail_url VARCHAR
-        ,overall_time VARCHAR
-        ,hours INT
-        ,minutes INT
-        ,seconds INT
-        ,job_id VARCHAR 
-        ,ingest_timestamp TIMESTAMP
-    );
-    """
-    print(f"{raw_tbl_sql}")
-    md.sql(raw_tbl_sql)
-
-    # Netflix API
-    raw_tbl_name = f"{db_schema}.netflix_api"
-    raw_tbl_sql = f"""
-    CREATE TABLE IF NOT EXISTS {raw_tbl_name} (
-        itemType VARCHAR			 
-        ,showType VARCHAR
-        ,id VARCHAR
-        ,imdbId VARCHAR
-        ,tmdbId VARCHAR
-        ,title VARCHAR
-        ,overview VARCHAR
-        ,firstAirYear FLOAT
-        ,lastAirYear FLOAT
-        ,originalTitle VARCHAR
-        ,genres VARCHAR
-        ,creators VARCHAR
-        ,cast VARCHAR
-        ,rating INT
-        ,seasonCount FLOAT 
-        ,episodeCount FLOAT
-        ,releaseYear FLOAT
-        ,directors VARCHAR
-        ,runtime FLOAT
-    );
-    """
-    print(f"{raw_tbl_sql}")
-    md.sql(raw_tbl_sql)
 
     # Netflix Top 10 Country List
     raw_tbl_name = f"{db_schema}.netflix_countries"
