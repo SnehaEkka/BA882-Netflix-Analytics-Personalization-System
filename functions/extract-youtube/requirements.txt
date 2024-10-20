@@ -1,0 +1,4 @@
+google-api-python-client
+pandas
+google-cloud-storage
+functions-framework

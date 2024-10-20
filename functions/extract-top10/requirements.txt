@@ -1,0 +1,4 @@
+requests
+pandas
+functions-framework
+google-cloud-storage
