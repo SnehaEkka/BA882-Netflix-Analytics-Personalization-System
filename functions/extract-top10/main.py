@@ -14,13 +14,15 @@ bucket_name = "ba882-team05"
 
 # file URLs
 file_urls = {
-    "countries": "https://www.netflix.com/tudum/top10/data/all-weeks-countries.tsv",
-    "global": "https://www.netflix.com/tudum/top10/data/all-weeks-global.tsv",
-    "most_popular": "https://www.netflix.com/tudum/top10/data/most-popular.tsv"
+    "netflix_countries": "https://www.netflix.com/tudum/top10/data/all-weeks-countries.tsv",
+    "netflix_global": "https://www.netflix.com/tudum/top10/data/all-weeks-global.tsv",
+    "netflix_most_popular": "https://www.netflix.com/tudum/top10/data/most-popular.tsv"
 }
 
 @functions_framework.http
 def main(request):
+    
+    # Generate job ID
     JOB_ID = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + "-" + str(uuid.uuid4())
     results = {}
 
@@ -29,7 +31,7 @@ def main(request):
 
         if response.status_code == 200:
             # Define blob name based on the dataset
-            blob_name = f"netflix_top10/{JOB_ID}/{dataset}_raw.json"
+            blob_name = f"jobs/{JOB_ID}/{dataset}_raw.json"
 
             # Use BytesIO directly with response.content
             df = pd.read_csv(BytesIO(response.content), sep='\t')

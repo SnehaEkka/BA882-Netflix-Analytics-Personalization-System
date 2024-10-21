@@ -141,12 +141,11 @@ def main(request):
     # flatten back to a list of dictionaries 
     videos_info = videos_info.to_dict('records')
 
-    # the job id (can be multiple times per day, but a timestamp like way to search)
-    # NOTE:  this supports multiple jobs within the minute, but do we really need it that for our jobs? <--- Batch focused, but when does batch not suffice?
+    # Generate job ID
     JOB_ID = datetime.datetime.now().strftime("%Y%m%d%H%M") + "-" + str(uuid.uuid4())
 
-    # write the final DataFrame to GCS
-    blob_name = f"youtube/{JOB_ID}/raw.json"
+    # Prepare data for GCS
+    blob_name = f"jobs/{JOB_ID}/youtube_api.json"
 
     # Save the data as a json file in memory
     json_buffer = BytesIO()
@@ -159,7 +158,7 @@ def main(request):
     blob = bucket.blob(blob_name)
     blob.upload_from_file(json_buffer, content_type="application/json")
 
-    # grab the path to the file as a string
+    # Prepare results
     file_path = f"gs://{bucket_name}/{blob_name}"
     
     results = {
