@@ -1,6 +1,0 @@
-functions-framework
-google-cloud-storage
-google-cloud-secret-manager
-duckdb
-pandas
-python-dateutil
