@@ -62,7 +62,7 @@ def task(request):
         ,originalTitle VARCHAR
         ,genres VARCHAR
         ,creators VARCHAR
-        ,cast VARCHAR
+        ,"cast" VARCHAR
         ,rating INT
         ,seasonCount FLOAT 
         ,episodeCount FLOAT

@@ -22,16 +22,18 @@ file_urls = {
 @functions_framework.http
 def main(request):
     
-    # Generate job ID
-    JOB_ID = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + "-" + str(uuid.uuid4())
     results = {}
 
     for dataset, url in file_urls.items():
+        
+        # Generate job ID
+        JOB_ID = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + "-" + str(uuid.uuid4())
+        
         response = requests.get(url)
 
         if response.status_code == 200:
             # Define blob name based on the dataset
-            blob_name = f"jobs/{JOB_ID}/{dataset}_raw.json"
+            blob_name = f"jobs/{dataset}/{JOB_ID}/{dataset}.json"
 
             # Use BytesIO directly with response.content
             df = pd.read_csv(BytesIO(response.content), sep='\t')

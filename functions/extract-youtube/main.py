@@ -145,7 +145,7 @@ def main(request):
     JOB_ID = datetime.datetime.now().strftime("%Y%m%d%H%M") + "-" + str(uuid.uuid4())
 
     # Prepare data for GCS
-    blob_name = f"jobs/{JOB_ID}/youtube_api.json"
+    blob_name = f"jobs/youtube_api/{JOB_ID}/youtube_api.json"
 
     # Save the data as a json file in memory
     json_buffer = BytesIO()

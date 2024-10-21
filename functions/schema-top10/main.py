@@ -98,6 +98,8 @@ def task(request):
 		,hours_viewed_first_91_days INT
 		,run_time FLOAT
 		,views_first_91_days INT
+        ,job_id VARCHAR
+        ,ingest_timestamp TIMESTAMP
     );
     """
     print(f"{raw_tbl_sql}")
