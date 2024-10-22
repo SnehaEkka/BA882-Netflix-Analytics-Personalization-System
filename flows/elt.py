@@ -69,7 +69,7 @@ def load_all_data(netflix_payload, top10_payload, youtube_payload):
     return resp
 
 # Prefect Flow
-@flow(name="ba882-project-etl-flow", log_prints=True)
+@flow(name="BA882-Project-EtLT-Flow", log_prints=True)
 def elt_flow():
     """The ETL flow which orchestrates Cloud Functions"""
 
@@ -100,4 +100,4 @@ def elt_flow():
     
 # Run the ETL flow
 if __name__ == "__main__":
-    etl_flow()
+    elt_flow()
