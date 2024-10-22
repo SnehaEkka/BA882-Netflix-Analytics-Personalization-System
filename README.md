@@ -12,7 +12,7 @@ We are considering three data feeds for our project:
 2. **Netflix API data:** has near real-time updated data on the shows and movies released on Netflix along with other key information. \
    *Link: https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability*
 3. **YouTube API data:** this gives insights into Netflix's content promotion strategies and audience engagement on Netflix's YouTube channel. \
-   *Link: https://rapidapi.com/ytjar/api/yt-api*   
+   *Link: https://console.cloud.google.com/marketplace/product/google/youtube.googleapis.com?project=ba882-inclass-project*   
 
 ### Motivation
 We are interested in these data feeds because they provide insights into Netflix’s content performance and marketing strategies. The Netflix Top 10 data offers direct information about viewer preferences on the streaming platform, while the YouTube data reveals how Netflix promotes its content and engages with audiences off-platform. By combining these datasets, we can better understand the relationship between Netflix’s content popularity and marketing efforts. Through trend analysis of trending videos and hashtags related to Netflix, we can identify current popular trends and audience preferences, which are crucial for content creators and brand marketing. We can impose specific conditions when collecting data, such as conducting a more detailed analysis for different regions. Additionally, by leveraging the YouTube Analytics API and YouTube Reporting API, we can access viewing statistics and popularity metrics for each video, enabling us to perform demographic analysis on specific types of videos. These insights can help Netflix select more suitable recommended content for different audience segments.
