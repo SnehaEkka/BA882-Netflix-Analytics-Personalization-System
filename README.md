@@ -31,7 +31,8 @@ We extracted multidimensional data related to movies and shows released on Netfl
 ![ERD](Data_Model_ERD.png)
 
 ### Superset Dashboard 
-In our project, we used MotherDuck as the data warehouse and Apache Superset to create visualizations. By linking MotherDuck with Apache Superset, we ensured seamless data flow and real-time updates in visualizations. This setup allowed us to derive meaningful insights from our data stored in the cloud data warehouse. The dashboard below provides some great insights from the Netflix and YouTube databases. It offers a clear snapshot of how Netflix content is performing and how viewers are engaging with it. 
+In our project, we used MotherDuck as the data warehouse and Apache Superset to create visualizations. By linking MotherDuck with Apache Superset, we ensured seamless data flow and real-time updates in visualizations. This setup allowed us to derive meaningful insights from our data stored in the cloud data warehouse. The dashboard below provides some great insights from the Netflix and YouTube databases. It offers a clear snapshot of how Netflix content is performing and how viewers are engaging with it.
+ 
 ![Dashboard](Superset_Dashboard.jpeg)
 
 
