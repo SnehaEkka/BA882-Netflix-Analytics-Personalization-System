@@ -70,7 +70,7 @@ def load_all_data(netflix_payload, top10_payload, youtube_payload):
 
 # Prefect Flow
 @flow(name="ba882-project-etl-flow", log_prints=True)
-def etl_flow():
+def elt_flow():
     """The ETL flow which orchestrates Cloud Functions"""
 
     # Schema setup
