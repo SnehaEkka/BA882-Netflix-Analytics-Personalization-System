@@ -27,7 +27,7 @@ Our project aims to explore several key business problems:
 6. **Genre Analysis:** Which genres perform best on Netflix, and how does this align with the genre focus in their YouTube marketing?
 
 ### Data Model (ERD)
-![ERD](erd.jpeg)
+![ERD](erd.jpg)
 
 ### Dashboard 
 ![Dashboard](dashboard.jpeg)
