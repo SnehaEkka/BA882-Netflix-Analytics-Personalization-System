@@ -7,11 +7,11 @@ A repository for a team project on "Deploying Analytics Pipelines" that involves
 ## Phase 1: Data Ops
 ### Data Feeds
 We are considering three data feeds for our project:
-1. Netflix Top 10 Weekly Data: provides information on the most-watched TV shows and movies on Netflix globally and by country weekly. \
+1. **Netflix Top 10 Weekly Data:** provides information on the most-watched TV shows and movies on Netflix globally and by country weekly. \
    *Link:* https://www.netflix.com/tudum/top10/
-2. Netflix API data: has near real-time updated data on the shows and movies released on Netflix along with other key information. \
+2. **Netflix API data:** has near real-time updated data on the shows and movies released on Netflix along with other key information. \
    *Link:* https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability
-3. YouTube API data for Netflix's official YouTube channel: this gives insights into Netflix's content promotion strategies and audience engagement on Netflix's YouTube channel. \
+3. **YouTube API data:** this gives insights into Netflix's content promotion strategies and audience engagement on Netflix's YouTube channel. \
    *Link:* https://rapidapi.com/ytjar/api/yt-api   
 
 ### Motivation
