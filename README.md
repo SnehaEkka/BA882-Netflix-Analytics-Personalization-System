@@ -25,3 +25,8 @@ Our project aims to explore several key business problems:
 4. **Content Trend Prediction:** Can we use historical data from both sources to predict future trends in content popularity?
 5. **Regional Preferences:** How do content preferences differ across regions, and how does Netflix tailor its YouTube marketing to different geographical audiences?
 6. **Genre Analysis:** Which genres perform best on Netflix, and how does this align with the genre focus in their YouTube marketing?
+
+### Data Model (ERD)
+![Alt text](image-filename.jpg)
+
+
