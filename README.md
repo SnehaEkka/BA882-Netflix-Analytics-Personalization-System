@@ -27,9 +27,11 @@ Our project aims to explore several key business problems:
 6. **Genre Analysis:** Which genres perform best on Netflix, and how does this align with the genre focus in their YouTube marketing?
 
 ### Data Model (ERD)
-![ERD](Data-Model_(ERD).png)
+We extracted multidimensional data related to movies and shows released on Netflix from three different sources: the Netflix Top 10 weekly data website, the YouTube Data API v3 (specific to Netflix's YT Channel), and the Streaming Availability API (specific to Netflix). We then ingested this data into five connected tables that we designed as follows:
+![ERD](Data_Model_ERD.png)
 
-### Dashboard 
-![Dashboard](dashboard.jpeg)
+### Superset Dashboard 
+In our project, we used MotherDuck as the data warehouse and Apache Superset to create visualizations. By linking MotherDuck with Apache Superset, we ensured seamless data flow and real-time updates in visualizations. This setup allowed us to derive meaningful insights from our data stored in the cloud data warehouse. The dashboard below provides some great insights from the Netflix and YouTube databases. It offers a clear snapshot of how Netflix content is performing and how viewers are engaging with it. 
+![Dashboard](Superset_Dashboard.jpeg)
 
 
