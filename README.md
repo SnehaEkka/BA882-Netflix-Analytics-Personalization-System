@@ -1,4 +1,7 @@
-# Deploying Analytics Pipelines
+# Netflix Analytics Pipeline
+
+
+
 A repository for a team project on "Deploying Analytics Pipelines" that involves three phases:
 - Phase 1: Data Ops (ETL/ELT and Warehousing)
 - Phase 2: ML Ops
