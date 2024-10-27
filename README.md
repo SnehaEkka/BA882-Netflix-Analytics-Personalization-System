@@ -39,4 +39,5 @@ In our project, we used MotherDuck as the data warehouse and Apache Superset to 
  
 ![Dashboard](Superset_Dashboard.jpeg)
 
-
+### Presented by Team 04
+[Netflix Pipeline Development & Content Analysis Slide Deck](https://www.canva.com/design/DAGUIVPifwA/FUQ7ERZgXGX6EsLjPMjIFg/view)
