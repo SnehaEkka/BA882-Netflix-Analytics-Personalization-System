@@ -1,4 +1,8 @@
-# Deploying Analytics Pipelines
+# Netflix Analytics Pipeline
+#### **Coursework: Deploying Analytics Pipeline**
+
+![](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Netflix-banner-image.png)
+
 A repository for a team project on "Deploying Analytics Pipelines" that involves three phases:
 - Phase 1: Data Ops (ETL/ELT and Warehousing)
 - Phase 2: ML Ops
@@ -25,3 +29,15 @@ Our project aims to explore several key business problems:
 4. **Content Trend Prediction:** Can we use historical data from both sources to predict future trends in content popularity?
 5. **Regional Preferences:** How do content preferences differ across regions, and how does Netflix tailor its YouTube marketing to different geographical audiences?
 6. **Genre Analysis:** Which genres perform best on Netflix, and how does this align with the genre focus in their YouTube marketing?
+
+### Data Model (ERD)
+We extracted multidimensional data related to movies and shows released on Netflix from three different sources: the Netflix Top 10 weekly data website, the YouTube Data API v3 (specific to Netflix's YT Channel), and the Streaming Availability API (specific to Netflix). We then ingested this data into five connected tables that we designed as follows:
+![ERD](Data_Model_ERD.png)
+
+### Superset Dashboard 
+In our project, we used MotherDuck as the data warehouse and Apache Superset to create visualizations. By linking MotherDuck with Apache Superset, we ensured seamless data flow and real-time updates in visualizations. This setup allowed us to derive meaningful insights from our data stored in the cloud data warehouse. The dashboard below provides some great insights from the Netflix and YouTube databases. It offers a clear snapshot of how Netflix content is performing and how viewers are engaging with it.
+ 
+![Dashboard](Superset_Dashboard.jpeg)
+
+### Presented by Team 04
+[Netflix Pipeline Development & Content Analysis Slide Deck](https://www.canva.com/design/DAGUIVPifwA/FUQ7ERZgXGX6EsLjPMjIFg/view)
