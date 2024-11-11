@@ -2,7 +2,7 @@ from prefect import flow
 
 if __name__ == "__main__":
     flow.from_source(
-        source="https://github.com/SnehaEkka/BA882-Team05-Project.git",
+        source="https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline.git",
         entrypoint="/home/sekka/BA882-Team05-Project/flows/elt.py:elt_flow",
     ).deploy(
         name="ba882-project-elt",
