@@ -49,26 +49,28 @@ def task(request):
     # Netflix API
     raw_tbl_name = f"{db_schema}.netflix_api"
     raw_tbl_sql = f"""
+    DROP TABLE IF EXISTS {raw_tbl_name};
     CREATE TABLE IF NOT EXISTS {raw_tbl_name} (
         itemType VARCHAR			 
         ,showType VARCHAR
-        ,id VARCHAR
+        ,id BIGINT
         ,imdbId VARCHAR
         ,tmdbId VARCHAR
         ,title VARCHAR
         ,overview VARCHAR
-        ,firstAirYear FLOAT
-        ,lastAirYear FLOAT
+        ,releaseYear DOUBLE
         ,originalTitle VARCHAR
         ,genres VARCHAR
-        ,creators VARCHAR
-        ,"cast" VARCHAR
-        ,rating INT
-        ,seasonCount FLOAT 
-        ,episodeCount FLOAT
-        ,releaseYear FLOAT
         ,directors VARCHAR
-        ,runtime FLOAT
+        ,"cast" VARCHAR
+        ,rating BIGINT
+        ,runtime DOUBLE
+        ,year BIGINT
+        ,firstAirYear DOUBLE
+        ,lastAirYear DOUBLE
+        ,creators VARCHAR
+        ,seasonCount DOUBLE 
+        ,episodeCount DOUBLE
     );
     """
     print(f"{raw_tbl_sql}")

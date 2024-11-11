@@ -49,6 +49,7 @@ def task(request):
     # Netflix Top 10 Country List
     raw_tbl_name = f"{db_schema}.netflix_countries"
     raw_tbl_sql = f"""
+    DROP TABLE IF EXISTS {raw_tbl_name};
     CREATE TABLE IF NOT EXISTS {raw_tbl_name} (
         country_name VARCHAR
         ,country_code VARCHAR
@@ -58,8 +59,6 @@ def task(request):
         ,show_title VARCHAR
         ,season_title VARCHAR
         ,cumulative_weeks_in_top_10 INT
-        ,job_id VARCHAR
-        ,ingest_timestamp TIMESTAMP
     );
     """
     print(f"{raw_tbl_sql}")
@@ -68,20 +67,19 @@ def task(request):
 	# Netflix Top 10 Global List
     raw_tbl_name = f"{db_schema}.netflix_global"
     raw_tbl_sql = f"""
+    DROP TABLE IF EXISTS {raw_tbl_name};
     CREATE TABLE IF NOT EXISTS {raw_tbl_name} (
         week TIMESTAMP
         ,category VARCHAR
-        ,weekly_rank INT
+        ,weekly_rank BIGINT
         ,show_title VARCHAR
         ,season_title VARCHAR
-		,weekly_hours_viewed INT
-		,run_time FLOAT
-		,weekly_views INT
-        ,cumulative_weeks_in_top_10 INT
+		,weekly_hours_viewed BIGINT
+		,run_time DOUBLE
+		,weekly_views DOUBLE
+        ,cumulative_weeks_in_top_10 BIGINT
 		,is_staggered_launch BOOLEAN
 		,episode_launch_details VARCHAR
-        ,job_id VARCHAR
-        ,ingest_timestamp TIMESTAMP
     );
     """
     print(f"{raw_tbl_sql}")
@@ -90,16 +88,16 @@ def task(request):
 	# Netflix Top 10 Most Popular
     raw_tbl_name = f"{db_schema}.netflix_most_popular"
     raw_tbl_sql = f"""
+    DROP TABLE IF EXISTS {raw_tbl_name};
     CREATE TABLE IF NOT EXISTS {raw_tbl_name} (
         category VARCHAR
         ,rank INT
         ,show_title VARCHAR
         ,season_title VARCHAR
-		,hours_viewed_first_91_days INT
-		,run_time FLOAT
-		,views_first_91_days INT
-        ,job_id VARCHAR
-        ,ingest_timestamp TIMESTAMP
+		,hours_viewed_first_91_days INT64
+		,run_time DOUBLE
+		,views_first_91_days INT64
+        ,extraction_date DATE
     );
     """
     print(f"{raw_tbl_sql}")

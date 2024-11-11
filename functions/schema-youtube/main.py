@@ -49,23 +49,24 @@ def task(request):
     # YouTube API
     raw_tbl_name = f"{db_schema}.youtube_api"
     raw_tbl_sql = f"""
+    DROP TABLE IF EXISTS {raw_tbl_name};
     CREATE TABLE IF NOT EXISTS {raw_tbl_name} (
-        video_id VARCHAR PRIMARY KEY			 
+        video_id VARCHAR --PRIMARY KEY			 
         ,title VARCHAR
+        ,extracted_title VARCHAR
         ,description VARCHAR
+        ,category VARCHAR
         ,published_at TIMESTAMP
-        ,views INT
-        ,likes INT
-        ,favorites INT
-        ,comments_count INT
+        ,views BIGINT
+        ,likes BIGINT
+        ,favorites BIGINT
+        ,comments_count BIGINT
         ,comments VARCHAR
         ,thumbnail_url VARCHAR
-        ,overall_time VARCHAR
-        ,hours INT
-        ,minutes INT
-        ,seconds INT
-        ,job_id VARCHAR 
-        ,ingest_timestamp TIMESTAMP
+        ,overall_time TIMESTAMP
+        ,hours BIGINT
+        ,minutes BIGINT
+        ,seconds BIGINT
     );
     """
     print(f"{raw_tbl_sql}")
