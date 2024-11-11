@@ -8,7 +8,7 @@ if __name__ == "__main__":
         name="ba882-project-elt",
         work_pool_name="ba882-05-pool",
         job_variables={"pip_packages": ["pandas", "requests"]},
-        cron="30 22 * * *",  # cron for daily at 5 AM
+        cron="0 23 * * *",  # cron for daily at 5 AM
         tags=["prod"],
         description="Pipeline to populate Netflix incoming data daily",
         version="1.0.0",
