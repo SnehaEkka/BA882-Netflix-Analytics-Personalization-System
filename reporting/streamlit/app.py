@@ -113,13 +113,8 @@
 # st.markdown("<h3 style='color:white;'>Data Visualization</h3>", unsafe_allow_html=True)
 # # Your existing data visualization code here
 
-
 # # Add background image (optional)
 # # add_bg_from_local('path_to_your_background_image.png')  # Uncomment and provide path to use a background image
-
-
-
-
 
 import streamlit as st
 import duckdb
@@ -264,5 +259,5 @@ def recommend(title):
 st.markdown("---")
 
 # Data visualization (modify as needed)
-st.markdown("<h3 style='color:white;'>Data Visualization</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='color:white;'>Top 5 Recommendations</h3>", unsafe_allow_html=True)
 # Your existing data visualization code here
