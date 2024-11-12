@@ -2,7 +2,6 @@ from prefect import flow
 
 if __name__ == "__main__":
     flow.from_source(
-        # source="https://github.com/Btibert3/BA882-Fall24-InClass-Project.git",
         source="https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline.git",
         entrypoint="prefect/flows/ml-views.py:ba882_ml_datasets",
     ).deploy(
