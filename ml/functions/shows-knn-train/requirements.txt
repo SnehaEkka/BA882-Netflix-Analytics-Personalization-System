@@ -1,0 +1,8 @@
+functions-framework
+pandas
+numpy
+joblib
+gcsfs
+scikit-learn
+google-cloud-storage
+google-cloud-aiplatform

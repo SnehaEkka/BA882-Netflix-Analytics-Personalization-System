@@ -1,0 +1,4 @@
+functions-framework
+joblib
+gcsfs
+scikit-learn
