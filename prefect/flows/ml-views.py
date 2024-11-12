@@ -18,13 +18,6 @@ def netflix_data():
     resp = invoke_gcf(url, payload={})
     return resp
 
-# @task(retries=2)
-# def post_tags():
-#     """Extract the RSS feeds into JSON on GCS"""
-#     url = "https://us-central1-btibert-ba882-fall24.cloudfunctions.net/ml-post-tags"
-#     resp = invoke_gcf(url, payload={})
-#     return resp
-
 # the job
 @flow(name="BA882-Project-ml-datasets", log_prints=True)
 def ba882_ml_datasets():
