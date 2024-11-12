@@ -28,17 +28,8 @@ ml_view_name = "netflix_ml"
 
 ## define the SQL
 ml_view_sql = f"""
-CREATE OR REPLACE VIEW {ml_schema}.{ml_view_name} 
-AS
-select 
-    title, 
-    overview,
-    directors,
-    "cast",
-    genres,
-    seasonCount,
-    episodeCount,
-    CURRENT_TIMESTAMP AS created_at
+CREATE OR REPLACE VIEW {ml_schema}.{ml_view_name} AS
+select *, CURRENT_TIMESTAMP AS created_at
 from {stage_db_schema}.netflix_api;
 """
 
@@ -64,7 +55,7 @@ def task(request):
     md.sql(ml_view_sql)
 
     # grab the view as a pandas dataframe, just the text and the labels
-    df = md.sql(f"select title, overview, directors, 'cast', genres, seasonCount, episodeCount from {ml_schema}.{ml_view_name};").df()
+    df = md.sql(f"select * from {ml_schema}.{ml_view_name};").df()
 
     # write the dataset to the training dataset path on GCS
     print("writing the csv file to gcs")
