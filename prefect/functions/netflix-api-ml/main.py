@@ -14,15 +14,14 @@ project_region = 'us-central1'
 secret_id = 'duckdb-token'   #<---------- this is the name of the secret you created
 version_id = 'latest'
 bucket_name = 'ba882-team05'
-ml_bucket_name = 'ba882-team05-models'
-ml_dataset_path = '/training-data/post-length/'
+ml_bucket_name = 'ba882-team05-vertex-models'
+ml_dataset_path = '/training-data/netflix-api-recommendation/'
 
 # db setup
-db = 'awsblogs'
+db = 'ba882_project'
 stage_db_schema = f"{db}.stage"
 ml_schema = f"{db}.ml"
-ml_view_name = "post_length"
-
+ml_view_name = "netflix_ml"
 
 
 ############################################################### helpers
@@ -33,19 +32,20 @@ CREATE OR REPLACE VIEW {ml_schema}.{ml_view_name}
 AS
 select 
     title, 
-    array_length(regexp_split_to_array(content_text, '\s+')) AS word_count,
+    overview,
+    directors,
+    "cast",
+    genres,
+    seasonCount,
+    episodeCount,
     CURRENT_TIMESTAMP AS created_at
-from {stage_db_schema}.posts;
-
+from {stage_db_schema}.netflix_api;
 """
 
 ############################################################### main task
 
-
 @functions_framework.http
 def task(request):
-
-    # we will not be passing in any data into the request
 
     # instantiate the services 
     sm = secretmanager.SecretManagerServiceClient()
@@ -64,11 +64,11 @@ def task(request):
     md.sql(ml_view_sql)
 
     # grab the view as a pandas dataframe, just the text and the labels
-    df = md.sql(f"select title, word_count from {ml_schema}.{ml_view_name};").df()
+    df = md.sql(f"select title, overview, directors, 'cast', genres, seasonCount, episodeCount from {ml_schema}.{ml_view_name};").df()
 
     # write the dataset to the training dataset path on GCS
     print("writing the csv file to gcs")
-    dataset_path = "gcs://" + ml_bucket_name + ml_dataset_path + "post-length.csv"
+    dataset_path = "gcs://" + ml_bucket_name + ml_dataset_path + "netflix_data.csv"
     df.to_csv(dataset_path, index=False)
 
     return {"dataset_path": dataset_path}, 200
