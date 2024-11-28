@@ -1,4 +1,4 @@
-# NEW STREAMLIT SCRIPT - movie and show lists (latest working)
+# NEW STREAMLIT SCRIPT - movie and show lists (latest working: 21)
 
 import streamlit as st
 import duckdb
@@ -30,6 +30,7 @@ md = duckdb.connect(f'md:?motherduck_token={md_token}')
 # Define separate URLs for movies and TV shows Cloud Run functions
 MOVIE_CLOUD_RUN_URL = "https://us-central1-ba882-inclass-project.cloudfunctions.net/ml-movies-serve"
 TV_SHOW_CLOUD_RUN_URL = "https://us-central1-ba882-inclass-project.cloudfunctions.net/ml-shows-serve"																								 
+
 # Fetch movies from DuckDB
 def get_movies():
     query = "SELECT title FROM ba882_project.stage.netflix_api where showType = 'movie'"
@@ -46,10 +47,11 @@ def get_tv_shows():
 def fetch_additional_data_from_motherduck(titles):
     # Convert list of titles into a format suitable for SQL query
     title_list_str = ", ".join([f"'{title}'" for title in titles])
+    print(title_list_str)
     
     # Query Motherduck to fetch metadata for these titles
     query = f"""
-    SELECT title, poster_url, releaseYear, genres 
+    SELECT "title", releaseYear, genres, imageSet
     FROM {db_schema}.netflix_api 
     WHERE title IN ({title_list_str})
     """
@@ -58,8 +60,25 @@ def fetch_additional_data_from_motherduck(titles):
     result_df = md.execute(query).df()
     
     return result_df
+
+# Function to extract verticalPoster (w240) from imageSet
+def get_vertical_poster(image_set):
+    try:
+        # Extract verticalPoster w240 URL if available
+        return image_set['verticalPoster']['w240']
+    except KeyError:
+        return None  # Return None if not found
+
+# Function to extract genres as a comma-separated string
+def get_genres(genres_list):
+    try:
+        # Extract genre names and join them with commas
+        return ", ".join([genre['name'] for genre in genres_list])
+    except KeyError:
+        return None  # Return None if not found   
+
 # Recommendation function that calls the appropriate Cloud Run service and fetches metadata from Motherduck
-def recommend(title, content_type='movie'):
+def recommend(title, content_type):
     # Determine which Cloud Run service to call based on content type
     if content_type == 'movie':
         cloud_run_url = MOVIE_CLOUD_RUN_URL
@@ -67,9 +86,17 @@ def recommend(title, content_type='movie'):
         cloud_run_url = TV_SHOW_CLOUD_RUN_URL
     
     # Prepare data payload (you might need to adjust this based on your API's expected input)
+    # payload = {
+    #     "title": title
+    #     # ,"content_type": content_type  # Either 'movie' or 'show'
+    # }
+
     payload = {
-        "title": title,
-        "content_type": content_type  # Either 'movie' or 'show'
+        "data": [
+            {
+                "title": title
+            }
+        ]
     }
     
     try:
@@ -80,16 +107,23 @@ def recommend(title, content_type='movie'):
         response.raise_for_status()
         
         # Parse and return recommendations from the response (assuming it's a list of titles)
-        recommended_titles = response.json()  # Assuming the API returns a list of recommended titles
+        recommendations = response.json()  # Assuming the API returns a list of recommended titles
         
+        # Extract the list of recommendations from the 'Sr.' key
+        recommended_titles = recommendations["recommendations"][0][title]
+        
+        # Slice to get only the top 5 recommendations
+        top_5_recommendations = recommended_titles[:5]
+
         # Fetch additional metadata from Motherduck for these recommended titles
-        metadata_df = fetch_additional_data_from_motherduck(recommended_titles)
+        metadata_df = fetch_additional_data_from_motherduck(top_5_recommendations)  # Get top 5
         
         return metadata_df
     
     except requests.exceptions.RequestException as e:
         st.error(f"Error fetching recommendations: {e}")
         return None
+
 # Function to add custom CSS
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
@@ -155,20 +189,28 @@ with tab1:
     selected_movie = movie_expander.selectbox("", movies_list, key="movie_select")
     
     if movie_expander.button("Get Movie Recommendations"):
-        st.text("Top 5 movie recommendations")
-        st.write("#")
+        st.text("Top 5 Recommendations")
         # Call your recommendation function for movies
-        movie_recommendations = recommend(selected_movie)
+        movie_recommendations_df = recommend(selected_movie, content_type='movie')
         
-        # Display movie recommendations
-        cols = st.columns(5)
-        for i, rec in enumerate(movie_recommendations[:5]):
-            with cols[i]:
-                st.write(f'<p style="color:white;"><b>{rec["title"]}</b></p>', unsafe_allow_html=True)
-                st.image(rec["poster"])
-                st.write("________")
-                st.write(f'<p style="color:#E50914;">Rating: <b>{rec["rating"]}</b></p>', unsafe_allow_html=True)
-                st.write(f'<p style="color:#E50914;">Votes: <b>{rec["votes"]}</b></p>', unsafe_allow_html=True)
+        if movie_recommendations_df is not None:
+            # Display movie recommendations (assuming each recommendation has title, poster_url, rating, votes)
+            cols = st.columns(5)
+            for i, row in movie_recommendations_df.iterrows():
+                with cols[i]:
+                    st.write(f'<p style="color:white;"><b>{row["title"]}</b></p>', unsafe_allow_html=True)
+                    
+                    # Get vertical poster URL (w240) and display it
+                    poster_url = get_vertical_poster(row['imageSet'])
+                    if poster_url:
+                        st.image(poster_url)
+                    
+                    st.write("________")
+                    
+                    # Display genres as comma-separated string
+                    genres_str = get_genres(row['genres'])
+                    if genres_str:
+                        st.write(f'<p style="color:#E50914;">Genres: <b>{genres_str}</b></p>', unsafe_allow_html=True)
 
 # TV Show selection with tab2
 with tab2:
@@ -180,17 +222,25 @@ with tab2:
         st.text("Top 5 TV show recommendations")
         st.write("#")
         # Call your recommendation function for TV shows
-        show_recommendations = recommend(selected_show)
+        show_recommendations_df = recommend(selected_show, content_type='show')
         
-        # Display TV show recommendations
-        cols = st.columns(5)
-        for i, rec in enumerate(show_recommendations[:5]):
-            with cols[i]:
-                st.write(f'<p style="color:white;"><b>{rec["title"]}</b></p>', unsafe_allow_html=True)
-                st.image(rec["poster"])
-                st.write("________")
-                st.write(f'<p style="color:#E50914;">Rating: <b>{rec["rating"]}</b></p>', unsafe_allow_html=True)
-                st.write(f'<p style="color:#E50914;">Votes: <b>{rec["votes"]}</b></p>', unsafe_allow_html=True)
+        if show_recommendations_df is not None:
+            cols = st.columns(5)
+            for i, row in show_recommendations_df.iterrows():
+                with cols[i]:
+                    st.write(f'<p style="color:white;"><b>{row["title"]}</b></p>', unsafe_allow_html=True)
+                    
+                    # Get vertical poster URL (w240) and display it
+                    poster_url = get_vertical_poster(row['imageSet'])
+                    if poster_url:
+                        st.image(poster_url)
+                    
+                    st.write("________")
+                    
+                    # Display genres as comma-separated string
+                    genres_str = get_genres(row['genres'])
+                    if genres_str:
+                        st.write(f'<p style="color:#E50914;">Genres: <b>{genres_str}</b></p>', unsafe_allow_html=True)
 
 # Recommendation function (you'll need to implement this)
 def recommend(title):
