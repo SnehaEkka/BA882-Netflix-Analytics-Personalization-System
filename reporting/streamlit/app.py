@@ -45,21 +45,33 @@ def get_tv_shows():
 
 # Function to fetch additional data (poster, releaseYear, genres) from Motherduck
 def fetch_additional_data_from_motherduck(titles):
+    # Check if titles list is empty
+    if not titles:
+        st.warning("No titles provided for fetching additional data.")
+        return pd.DataFrame()  # Return an empty DataFrame
+    
     # Convert list of titles into a format suitable for SQL query
     title_list_str = ", ".join([f"'{title}'" for title in titles])
-    print(title_list_str)
+    st.write("Title List for Query:", title_list_str)
     
     # Query Motherduck to fetch metadata for these titles
     query = f"""
-    SELECT "title", releaseYear, genres, imageSet
+    SELECT title, releaseYear, genres, imageSet 
     FROM {db_schema}.netflix_api 
     WHERE title IN ({title_list_str})
     """
+    st.write("Executing SQL Query:", query)
     
-    # Execute query and return results as a DataFrame
-    result_df = md.execute(query).df()
-    
-    return result_df
+    try:
+        # Execute query and return results as a DataFrame
+        result_df = md.execute(query).df()
+        st.write("Query Result DataFrame:", result_df.head())
+        return result_df
+
+    except Exception as e:
+        st.error(f"Error executing SQL query: {e}")
+        return pd.DataFrame()  # Return an empty DataFrame in case of error
+
 
 # Function to extract verticalPoster (w240) from imageSet
 def get_vertical_poster(image_set):
@@ -69,6 +81,7 @@ def get_vertical_poster(image_set):
     except KeyError:
         return None  # Return None if not found
 
+
 # Function to extract genres as a comma-separated string
 def get_genres(genres_list):
     try:
@@ -76,6 +89,7 @@ def get_genres(genres_list):
         return ", ".join([genre['name'] for genre in genres_list])
     except KeyError:
         return None  # Return None if not found   
+
 
 # Recommendation function that calls the appropriate Cloud Run service and fetches metadata from Motherduck
 def recommend(title, content_type):
@@ -91,7 +105,7 @@ def recommend(title, content_type):
     #     # ,"content_type": content_type  # Either 'movie' or 'show'
     # }
 
-    payload = {
+    payload = { 
         "data": [
             {
                 "title": title
@@ -106,23 +120,37 @@ def recommend(title, content_type):
         # Check if the request was successful
         response.raise_for_status()
         
-        # Parse and return recommendations from the response (assuming it's a list of titles)
-        recommendations = response.json()  # Assuming the API returns a list of recommended titles
-        
-        # Extract the list of recommendations from the 'Sr.' key
-        recommended_titles = recommendations["recommendations"][0][title]
-        
-        # Slice to get only the top 5 recommendations
-        top_5_recommendations = recommended_titles[:5]
+        # Parse the JSON response
+        recommendations = response.json()
+
+        # Extract the list of recommendations for the given title
+        recommended_items = recommendations["recommendations"][0][title]
+
+        # Extract only the top 10 titles from the recommended items
+        top_10_titles = [item["title"] for item in recommended_items]
+        print("Top 10 Recommendations:", top_10_titles)
+
+        top_5_recommendations = top_10_titles[:5]
 
         # Fetch additional metadata from Motherduck for these recommended titles
         metadata_df = fetch_additional_data_from_motherduck(top_5_recommendations)  # Get top 5
         
+        # Check if metadata_df is empty
+        if metadata_df.empty:
+            st.warning("No recommendations found.")
+            return None
+
+        print("Metadata DataFrame:", metadata_df.head())
         return metadata_df
-    
+
     except requests.exceptions.RequestException as e:
         st.error(f"Error fetching recommendations: {e}")
         return None
+
+    except KeyError as e:
+        st.error(f"Unexpected response format: {e}")
+        return None
+
 
 # Function to add custom CSS
 def add_bg_from_local(image_file):
