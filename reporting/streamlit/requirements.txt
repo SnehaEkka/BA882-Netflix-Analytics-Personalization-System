@@ -1,7 +1,9 @@
-streamlit 
-matplotlib
-networkx
-google-cloud-secret-manager
-numpy
+streamlit
 pandas
+numpy
+matplotlib
 duckdb
+google-cloud-secret-manager
+requests
+streamlit-lottie
+networkx
