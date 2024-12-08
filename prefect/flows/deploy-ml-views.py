@@ -3,7 +3,7 @@ from prefect import flow
 if __name__ == "__main__":
     flow.from_source(
         source="https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline.git",
-        entrypoint="prefect/flows/ml-views.py:ba882_ml_datasets",
+        entrypoint="/home/sekka/BA882-Team05-Project/prefect/flows/ml-views.py:ba882_ml_datasets",
     ).deploy(
         name="ba882-ml-datasets",
         work_pool_name="ba882-05-pool",

@@ -4,7 +4,7 @@
 ######
 
 # setup the project
-gcloud config set project btibert-ba882-fall24
+gcloud config set project ba882-inclass-project
 
 # schema setup
 echo "======================================================"
