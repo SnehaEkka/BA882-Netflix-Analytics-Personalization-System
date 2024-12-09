@@ -7,3 +7,5 @@ google-cloud-secret-manager
 requests
 streamlit-lottie
 networkx
+vertexai
+google-cloud-aiplatform

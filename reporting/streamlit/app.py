@@ -1,3 +1,5 @@
+# FREYA'S CODE
+
 # NEW STREAMLIT SCRIPT
 
 import streamlit as st
@@ -11,9 +13,14 @@ import json
 import ast
 import re
 
+from google.cloud import secretmanager
+import vertexai
+from vertexai.generative_models import GenerativeModel, GenerationConfig
+
 
 # Secret manager and database connection setup
 project_id = 'ba882-inclass-project'
+region_id = "us-central1"
 secret_id = 'duckdb-token'
 version_id = 'latest'
 db = 'ba882_project'
@@ -28,6 +35,9 @@ response = sm.access_secret_version(request={"name": name})
 md_token = response.payload.data.decode("UTF-8")
 md = duckdb.connect(f'md:?motherduck_token={md_token}')
 
+# Vertex AI
+vertexai.init(project=project_id, location=region_id)
+model = GenerativeModel("gemini-1.5-pro-001")
 
 # Define Cloud Run URLs
 MOVIE_CLOUD_RUN_URL = "https://us-central1-ba882-inclass-project.cloudfunctions.net/ml-movies-serve"
@@ -46,6 +56,15 @@ def get_movies():
     movies_df = md.execute(query).df()
     return movies_df['title'].tolist()
 
+# Fetch all movie data
+def extract_all_movie_data():
+    query = """
+    SELECT *
+    FROM ba882_project.stage.netflix_api
+    WHERE showType = 'movie'
+    """
+    movie_df = md.sql(query).df()
+    return movie_df
 
 # Fetch TV shows from DuckDB
 def get_tv_shows():
@@ -53,6 +72,14 @@ def get_tv_shows():
     shows_df = md.execute(query).df()
     return shows_df['title'].tolist()
 
+def extract_all_show_date():
+    query = """
+    SELECT *
+    FROM ba882_project.stage.netflix_api
+    WHERE showType = 'series'
+    """
+    show_df = md.sql(query).df()
+    return show_df
 
 def fetch_additional_data_from_motherduck(titles):
     if not titles:
@@ -168,6 +195,19 @@ def recommend(title, content_type):
         st.error(f"Unexpected response format: {e}")
         return None
 
+# Collect user feedback and prepare data for LLM
+def prepare_prompt(selected_work, recommendations_df, feedback):
+    dic = {
+        'initial_selection': selected_work,
+        'initial_recommendations': list(recommendations_df['title']),
+        'cast': list(recommendations_df['cast']),
+        'overview': list(recommendations_df['overview']),
+        'genres': list(recommendations_df['genres']),
+        'feedback': feedback
+    }
+    
+    return dic
+
 
 # Set page config
 st.set_page_config(page_title="Netflix Recommendation System", layout="wide")
@@ -270,6 +310,52 @@ with tab1:
                 )
         else:
             st.warning("Please select a movie before getting recommendations.")
+    
+    feedback = st.sidebar.text_area("What specifically are you looking for?")
+    
+    # Extract all movie data (page)
+    page = extract_all_movie_data()
+
+    dic = prepare_prompt(selected_movie, movie_recommendations_df, feedback)
+
+    search_button = st.sidebar.button("Get New Recommendations")
+
+    # When the user clicks the button for new recommendations
+    if search_button:
+        if feedback.strip():
+            prompt = f"""
+            Our Netflix movie data is here: {page}.
+            The user wants recommendations for movies similar to this one: {dic['initial_selection']}.
+            The recommendation system suggested the following movies: {', '.join(dic['initial_recommendations'])}.
+            The user's feedback is: {dic['feedback']}.
+
+            Based on the user's feedback, please recommend five additional movies from the Netflix movie data that are similar to the initially selected movie.
+            Don't repeat the movies already mentioned by the recommendation system.
+            Provide the list of recommended movies along with a brief description for each.
+            Please output in the following format:
+            Movie title 1
+            Introduction
+
+            Movie title 2
+            Introduction
+
+            Movie title 3
+            Introduction
+
+            Movie title 4
+            Introduction
+
+            Movie title 5
+            Introduction
+            """
+
+            # Generate recommendations with LLM
+            response = model.generate_content(prompt, generation_config=GenerationConfig(temperature=0))
+
+            # Display the results
+            st.write(response.text)
+
+
 
 # TV Show selection with tab2
 with tab2:
@@ -295,3 +381,47 @@ with tab2:
                 )
         else:
             st.warning("Please select a TV show before getting recommendations.")
+
+    feedback = st.sidebar.text_area("What specifically are you looking for?")
+
+    # Extract all show data (page)
+    page = extract_all_show_data()
+
+    dic = prepare_prompt(selected_show, show_recommendations_df, feedback)
+
+    search_button = st.sidebar.button("Get New Recommendations")
+
+    # When the user clicks the button for new recommendations
+    if search_button:
+        if feedback.strip():
+            prompt = f"""
+            Our Netflix show data is here: {page}.
+            The user wants recommendations for shows similar to this one: {dic['initial_selection']}.
+            The recommendation system suggested the following shows: {', '.join(dic['initial_recommendations'])}.
+            The user's feedback is: {dic['feedback']}.
+
+            Based on the user's feedback, please recommend five additional shows from the Netflix show data that are similar to the initially selected movie.
+            Don't repeat the shows already mentioned by the recommendation system.
+            Provide the list of recommended shows along with a brief description for each.
+            Please output in the following format:
+            Show title 1
+            Introduction
+
+            Show title 2
+            Introduction
+
+            Show title 3
+            Introduction
+
+            Show title 4
+            Introduction
+
+            Show title 5
+            Introduction
+            """
+
+            # Generate recommendations with LLM
+            response = model.generate_content(prompt, generation_config=GenerationConfig(temperature=0))
+
+            # Display the results
+            st.write(response.text)

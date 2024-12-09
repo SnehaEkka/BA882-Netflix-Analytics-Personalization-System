@@ -11,8 +11,10 @@ vector_secret = "pinecone"
 
 # db setup
 db = 'ba882_project'
-schema = "genai"
-db_schema = f"{db}.{schema}"
+movie_schema = "genai_movies"
+show_schema = "genai_shows"
+movie_db_schema = f"{db}.{movie_schema}"
+show_db_schema = f"{db}.{show_schema}"
 vector_index = "overview-content"
 
 @functions_framework.http
@@ -33,23 +35,33 @@ def task(request):
 
     ##################################################### create the schema
 
-    # create the schema
-    md.sql(f"CREATE SCHEMA IF NOT EXISTS {db_schema};") 
+    # create the schemas
+    md.sql(f"CREATE SCHEMA IF NOT EXISTS {movie_db_schema};")
+    md.sql(f"CREATE SCHEMA IF NOT EXISTS {show_db_schema};")
 
     ##################################################### create the tables
 
-    ## recommended: either a new schema, or a naming convention assuming the # of indexes managed is only a handful at most
-
-    # posts - flag when the records were processed
-    raw_tbl_name = f"{db_schema}.pinecone_overview"
-    raw_tbl_sql = f"""
-    CREATE TABLE IF NOT EXISTS {raw_tbl_name} (
+    # movies table
+    movie_tbl_name = f"{movie_db_schema}.pinecone_movies"
+    movie_tbl_sql = f"""
+    CREATE TABLE IF NOT EXISTS {movie_tbl_name} (
         id VARCHAR PRIMARY KEY,
         parsed_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """
-    print(f"{raw_tbl_sql}")
-    md.sql(raw_tbl_sql)
+    print(f"Creating movie table: {movie_tbl_sql}")
+    md.sql(movie_tbl_sql)
+
+    # shows table
+    show_tbl_name = f"{show_db_schema}.pinecone_shows"
+    show_tbl_sql = f"""
+    CREATE TABLE IF NOT EXISTS {show_tbl_name} (
+        id VARCHAR PRIMARY KEY,
+        parsed_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """
+    print(f"Creating show table: {show_tbl_sql}")
+    md.sql(show_tbl_sql)
 
 
     ##################################################### vectordb 
