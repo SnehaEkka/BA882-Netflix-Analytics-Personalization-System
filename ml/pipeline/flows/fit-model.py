@@ -20,14 +20,14 @@ def schema_setup():
     return resp
 
 @task(retries=2)
-def train():
+def train_movies():
     """Train the model against movies data from the cloud warehouse"""
     url = "https://us-central1-ba882-inclass-project.cloudfunctions.net/mlops-movies-trainer"
     resp = invoke_gcf(url, payload={})
     return resp
 
 @task(retries=2)
-def train():
+def train_shows():
     """Train the model against shows data from the cloud warehouse"""
     url = "https://us-central1-ba882-inclass-project.cloudfunctions.net/mlops-shows-trainer"
     resp = invoke_gcf(url, payload={})
@@ -41,10 +41,13 @@ def training_flow():
     result = schema_setup()
     print("The schema setup completed")
 
-    stats = train()
+    stats_movies = train_movies()
     print("The model training completed successfully")
-    print(f"{stats}")
+    print(f"{stats_movies}")
 
+    stats_shows = train_shows()
+    print("The model training completed successfully")
+    print(f"{stats_shows}")
 
 # the job
 if __name__ == "__main__":
