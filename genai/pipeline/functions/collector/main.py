@@ -44,7 +44,7 @@ def task(request):
         {db}.stage.netflix_api m
     WHERE
         m.showType = 'movie' AND
-        m.id NOT IN (SELECT id FROM {movie_db_schema}.pinecone_movies)
+        CAST(m.id AS VARCHAR) NOT IN (SELECT CAST(id AS VARCHAR) FROM {movie_db_schema}.pinecone_movies)
     """
     
     movie_df = md.sql(movie_sql).df()
@@ -58,10 +58,10 @@ def task(request):
     SELECT 
         s.id 
     FROM 
-        {db}.stage.shows s
+        {db}.stage.netflix_api s
     WHERE
         s.showType = 'series' AND 
-        s.id NOT IN (SELECT id FROM {show_db_schema}.pinecone_shows)
+        CAST(s.id AS VARCHAR) NOT IN (SELECT CAST(id AS VARCHAR) FROM {show_db_schema}.pinecone_shows)
     """
     
     show_df = md.sql(show_sql).df()
@@ -70,7 +70,13 @@ def task(request):
     show_ids = show_df.id.to_list()
 
     return {
-        "num_entries": len(ids), 
-        "job_id": job_id, 
-        "post_ids": ids
+        "movies": {
+            "num_entries": len(movie_ids),
+            "ids": movie_ids
+        },
+        "shows": {
+            "num_entries": len(show_ids),
+            "ids": show_ids
+        },
+        "job_id": job_id
     }, 200
