@@ -2,10 +2,12 @@ streamlit
 pandas
 numpy
 matplotlib
+plotly
 duckdb
 google-cloud-secret-manager
 requests
 streamlit-lottie
-networkx
+network
 vertexai
 google-cloud-aiplatform
+python-dotenv
