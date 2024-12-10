@@ -1,5 +1,5 @@
 select
     *
 from
-    ba882_project.stage.netflix_api
+    ba882_project.ml.netflix_ml
 ;

@@ -43,6 +43,7 @@ def task(request):
         name VARCHAR,
         gcs_path VARCHAR,
         model_path VARCHAR,
+        vectorizer_path VARCHAR,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """
@@ -84,6 +85,8 @@ def task(request):
         name VARCHAR,
         gcs_path VARCHAR,
         model_path VARCHAR,
+        vectorizer_path VARCHAR,
+        scaler_path VARCHAR,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """

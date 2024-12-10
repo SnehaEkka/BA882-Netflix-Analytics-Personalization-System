@@ -11,7 +11,6 @@ def invoke_gcf(url:str, payload:dict):
     response.raise_for_status()
     return response.json()
 
-
 @task(retries=2)
 def schema_setup():
     """Setup the stage schema"""
@@ -42,11 +41,11 @@ def training_flow():
     print("The schema setup completed")
 
     stats_movies = train_movies()
-    print("The model training completed successfully")
+    print("The model training for movies completed successfully")
     print(f"{stats_movies}")
 
     stats_shows = train_shows()
-    print("The model training completed successfully")
+    print("The model training for shows completed successfully")
     print(f"{stats_shows}")
 
 # the job

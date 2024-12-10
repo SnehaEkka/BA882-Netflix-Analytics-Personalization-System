@@ -59,3 +59,20 @@ gcloud functions deploy mlops-shows-trainer \
     --allow-unauthenticated \
     --memory 1GB  \
     --timeout 540s
+
+# the predictions function
+echo "======================================================"
+echo "deploying dynamic prediction endpoint"
+echo "======================================================"
+
+gcloud functions deploy mlops-prediction \
+    --gen2 \
+    --runtime python311 \
+    --trigger-http \
+    --entry-point task \
+    --source /home/sekka/BA882-Team05-Project/ml/pipeline/functions/prediction \
+    --stage-bucket ba882-team05-functions \
+    --service-account id-82-group-project@ba882-inclass-project.iam.gserviceaccount.com \
+    --region us-central1 \
+    --allow-unauthenticated \
+    --memory 1GB
