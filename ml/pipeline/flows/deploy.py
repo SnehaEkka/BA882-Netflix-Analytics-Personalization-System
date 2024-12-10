@@ -6,8 +6,8 @@ if __name__ == "__main__":
         source="https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline.git",
         entrypoint="/home/sekka/BA882-Team05-Project/ml/pipeline/flows/fit-model.py:training_flow",
     ).deploy(
-        name="mlops-train-model", # Change name accordingly to stay consistent with other pipeline naming cinvention
-        work_pool_name="brock-pool1",  # Freya's worker pool here!
+        name="mlops-train-model",
+        work_pool_name="ba882-05-pool",
         job_variables={"env": {"Team-05": "loves-to-code"},
                        "pip_packages": ["pandas", "requests"]},
         tags=["prod"],
