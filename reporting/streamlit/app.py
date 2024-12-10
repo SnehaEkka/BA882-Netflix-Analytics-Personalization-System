@@ -206,7 +206,7 @@ body {{
 
 /* Reduce width of the main container */
 .block-container {{
-    max-width: 1000px;
+    max-width: 2000px;
     padding-top: 1rem;
     padding-bottom: 1rem;
     margin: auto;
@@ -217,7 +217,7 @@ body {{
 
 # Set page config and add Netflix logo
 # st.set_page_config(page_title="Movie Recommendation System", layout="wide")
-st.image("https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", width=100)
+# st.image("https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", width=100)
 
 
 # Title and introduction
@@ -263,7 +263,7 @@ with tab1:
 
     movie_recommendations_df = recommend(selected_movie, content_type='movie')
     
-    with st.expander("Give Feedback to Improve Recommendations"):
+    with st.expander("Want to get customized recommendations?"):
 
         # Text area for feedback
         feedback = st.text_area("What specifically are you looking for?", key='feedback')
@@ -311,7 +311,7 @@ with tab1:
                 st.write(response.text)
 
         else:
-                st.warning("Please provide feedback to improve the recommendations.")
+                st.warning("Please provide text to improve your recommendations.")
 
     
 
@@ -344,7 +344,7 @@ with tab2:
     
     show_recommendations_df = recommend(selected_show, content_type='show')
 
-    with st.expander("Give Feedback to Improve Recommendations"):
+    with st.expander("Want to get customized recommendations?"):
 
         feedback = st.text_area("What specifically are you looking for?", key='feedback1')
         
@@ -390,4 +390,4 @@ with tab2:
                 st.write(response.text)
 
         else:
-                st.warning("Please provide feedback to improve the recommendations.")
+                st.warning("Please provide text to improve your recommendations.")
