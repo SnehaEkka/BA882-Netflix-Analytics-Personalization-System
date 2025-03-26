@@ -1,7 +1,7 @@
 # Netflix Content Recommendation System
 ### **Coursework: Deploying Analytics Pipeline**
 
-![](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Netflix-banner-image.png)
+![](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/Netflix-banner-image.png)
 
 A repository for a team project on "Deploying Analytics Pipelines" that involves three phases:
 - Phase 1: Data Ops (ETL/ELT and Warehousing)
@@ -21,7 +21,7 @@ The project aims to explore several key business problems:
 5. **Regional Preferences:** How do content preferences differ across regions, and how does Netflix tailor its YouTube marketing to different geographical audiences?
 6. **Genre Analysis:** Which genres perform best on Netflix, and how does this align with the genre focus in their YouTube marketing?
 
-Netflix offers a vast catalog of content, making it difficult for users to discover new shows and movies. Traditional recommendation systems rely on watch history, but our approach extends beyond that by leveraging content metadata and user feedback. We aim to develop a hybrid recommendation engine that improves content discoverability and engagement.
+Netflix offers a vast content catalog, making it difficult for users to discover new shows and movies. Traditional recommendation systems rely on watch history, but our approach extends beyond that by leveraging content metadata and user feedback. We aim to develop a hybrid recommendation engine that improves content discoverability and engagement.
 
 ### Data Sources
 Our project incorporates multiple data feeds:
@@ -41,13 +41,16 @@ Our project incorporates multiple data feeds:
   - Stored data in **DuckDB via MotherDuck** for efficient querying.
 - **Entity-Relationship Diagram (ERD) Creation:**
   - Designed a schema to map relationships between datasets.
-    ![ERD](Data_Model_ERD.png)
+    
+    ![ERD Diagram](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/Data_Model_ERD.png)
+    
 - **ETL Pipeline Development:**
   - Built an **EtLT** (Extract, Transform, Load, then Transform) pipeline.
   - Converted date formats and extracted relevant features from unstructured data.
 - **Visualization with Superset:**
   - Created dashboards for analyzing viewership trends.
-    ![Dashboard](Superset_Dashboard.jpeg)
+    
+    ![Superset Dashboard](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/Superset_Dashboard.jpeg)
 
 ### Challenges & Solutions
 - **Data Inconsistencies:** Some datasets lacked unique identifiers, requiring fuzzy matching techniques.
@@ -69,7 +72,9 @@ Our project incorporates multiple data feeds:
   - Engineered features such as **cast, director, genre, and descriptions** for content similarity.
 - **Prefect Pipeline Deployment:**
   - Automated daily ETL and model training flows using **Prefect Cloud**.
-  - 📌 **Add Prefect Pipeline Screenshot Here**
+    
+    ![ETL Prefect Flow](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/ETL%20(2).png)
+    
 - **Dataset Expansion:**
   - Backfilled data for 2020-2021 to enhance model accuracy.
 
@@ -89,11 +94,20 @@ Our project incorporates multiple data feeds:
 - **Automated ML Pipeline:**
   - Integrated model training and storage into **MotherDuck**.
   - Archived model metrics for tracking improvements.
-  - 📌 **Add Netflix Pipeline Image**
+    
+    ![Updated EtLT Prefect Flow](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/EtLt%20(3).png)
+    
+    ![ML Prefect Flow](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/ML%20Flow%20(3).png)
+    
 - **Streamlit Application Development:**
   - Built an interactive UI for users to receive recommendations and provide feedback to enhance the recommendations further.
   - Added interactive visualizations to showcase content trends.
-  - 📌 **Add Netflix Analytics Page Screenshot Here**
+    
+    ![Netflix Analytics](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/Streamlit%20Analytics%20(3).png)
+    
+    ![Recommendations](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/Streamlit%20KNN%20(3).png)
+    
+    ![User Feedback Integration](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/Streamlit%20LLM%20(3).png)
 
 ### Challenges & Solutions
 - **Model Overfitting:** High accuracy suggested potential overfitting; addressed by balancing feature weights.
@@ -130,5 +144,5 @@ Our project incorporates multiple data feeds:
 ---
 
 ## 📌 Project Links
-- **GitHub Repository:** [GitHub-Team05](#) (Attach Link)
+- **GitHub Repository:** [GitHub-Team05](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/tree/main)
 - **Streamlit Application:** [Streamlit-Team05](https://streamlit-poc-614716406197.us-central1.run.app/)
