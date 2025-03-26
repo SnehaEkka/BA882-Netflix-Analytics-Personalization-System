@@ -1,5 +1,5 @@
-# Netflix Analytics Pipeline
-#### **Coursework: Deploying Analytics Pipeline**
+# Netflix Content Recommendation System
+### **Coursework: Deploying Analytics Pipeline**
 
 ![](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Netflix-banner-image.png)
 
@@ -8,21 +8,12 @@ A repository for a team project on "Deploying Analytics Pipelines" that involves
 - Phase 2: ML Ops
 - Phase 3: LLM Ops
 
-## Phase 1: Data Ops
-### Data Feeds
-We are considering three data feeds for our project:
-1. **Netflix Top 10 Weekly Data:** provides information on the most-watched TV shows and movies on Netflix globally and by country weekly. \
-   *Link: https://www.netflix.com/tudum/top10/*
-2. **Netflix API data:** has near real-time updated data on the shows and movies released on Netflix along with other key information. \
-   *Link: https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability*
-3. **YouTube API data:** this gives insights into Netflix's content promotion strategies and audience engagement on Netflix's YouTube channel. \
-   *Link: https://console.cloud.google.com/marketplace/product/google/youtube.googleapis.com?project=ba882-inclass-project*   
-
+## 📌 Project Overview
 ### Motivation
-We are interested in these data feeds because they provide insights into Netflix’s content performance and marketing strategies. The Netflix Top 10 data offers direct information about viewer preferences on the streaming platform, while the YouTube data reveals how Netflix promotes its content and engages with audiences off-platform. By combining these datasets, we can better understand the relationship between Netflix’s content popularity and marketing efforts. Through trend analysis of trending videos and hashtags related to Netflix, we can identify current popular trends and audience preferences, which are crucial for content creators and brand marketing. We can impose specific conditions when collecting data, such as conducting a more detailed analysis for different regions. Additionally, by leveraging the YouTube Analytics API and YouTube Reporting API, we can access viewing statistics and popularity metrics for each video, enabling us to perform demographic analysis on specific types of videos. These insights can help Netflix select more suitable recommended content for different audience segments.
+With the rise of streaming platforms, content recommendation has become crucial for improving user experience. This project focuses on enhancing Netflix's recommendation system by integrating Machine Learning (ML) techniques with Large Language Models (LLMs) to provide more personalized and data-driven recommendations.
 
 ### Business Problem
-Our project aims to explore several key business problems:
+The project aims to explore several key business problems:
 1. **Content Performance Analysis:** How do Netflix's most popular shows and movies perform over time, and what factors contribute to their success?
 2. **Marketing Effectiveness:** Is there a correlation between Netflix's YouTube promotional activities and content performance on the Netflix platform?
 3. **Audience Engagement:** How does audience engagement on YouTube (likes, comments, shares) relate to a show or movie's popularity on Netflix?
@@ -30,14 +21,114 @@ Our project aims to explore several key business problems:
 5. **Regional Preferences:** How do content preferences differ across regions, and how does Netflix tailor its YouTube marketing to different geographical audiences?
 6. **Genre Analysis:** Which genres perform best on Netflix, and how does this align with the genre focus in their YouTube marketing?
 
-### Data Model (ERD)
-We extracted multidimensional data related to movies and shows released on Netflix from three different sources: the Netflix Top 10 weekly data website, the YouTube Data API v3 (specific to Netflix's YT Channel), and the Streaming Availability API (specific to Netflix). We then ingested this data into five connected tables that we designed as follows:
-![ERD](Data_Model_ERD.png)
+Netflix offers a vast catalog of content, making it difficult for users to discover new shows and movies. Traditional recommendation systems rely on watch history, but our approach extends beyond that by leveraging content metadata and user feedback. We aim to develop a hybrid recommendation engine that improves content discoverability and engagement.
 
-### Superset Dashboard 
-In our project, we used MotherDuck as the data warehouse and Apache Superset to create visualizations. By linking MotherDuck with Apache Superset, we ensured seamless data flow and real-time updates in visualizations. This setup allowed us to derive meaningful insights from our data stored in the cloud data warehouse. The dashboard below provides some great insights from the Netflix and YouTube databases. It offers a clear snapshot of how Netflix content is performing and how viewers are engaging with it.
- 
-![Dashboard](Superset_Dashboard.jpeg)
+### Data Sources
+Our project incorporates multiple data feeds:
+- **Netflix Top 10 Weekly Data** – Provides insights into trending content. \
+   *Link: https://www.netflix.com/tudum/top10/*
+- **Netflix API Data** – Contains metadata about Netflix content. \
+   *Link: https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability*
+- **YouTube API Data** – Captures engagement metrics from trailers and promotional videos. \
+   *Link: https://console.cloud.google.com/marketplace/product/google/youtube.googleapis.com?project=ba882-inclass-project*
 
-### Presented by Team 04
-[Netflix Pipeline Development & Content Analysis Slide Deck](https://www.canva.com/design/DAGUIVPifwA/FUQ7ERZgXGX6EsLjPMjIFg/view)
+---
+
+## 🚀 Phase 1: Data Collection & Initial ETL
+### Accomplishments
+- **Data Extraction & Storage:**
+  - Integrated Netflix, YouTube, and other datasets.
+  - Stored data in **DuckDB via MotherDuck** for efficient querying.
+- **Entity-Relationship Diagram (ERD) Creation:**
+  - Designed a schema to map relationships between datasets.
+    ![ERD](Data_Model_ERD.png)
+- **ETL Pipeline Development:**
+  - Built an **EtLT** (Extract, Transform, Load, then Transform) pipeline.
+  - Converted date formats and extracted relevant features from unstructured data.
+- **Visualization with Superset:**
+  - Created dashboards for analyzing viewership trends.
+    ![Dashboard](Superset_Dashboard.jpeg)
+
+### Challenges & Solutions
+- **Data Inconsistencies:** Some datasets lacked unique identifiers, requiring fuzzy matching techniques.
+- **Storage Optimization:** Transitioned from CSV-based storage to **MotherDuck** for better scalability.
+
+🔗 [Phase 1 Presentation Deck](https://www.canva.com/design/DAGUIVPifwA/-WOV-uiLMT-rBssArXQrYw/edit)
+
+---
+
+## 🔄 Phase 2: Enhancing ETL & Building Machine Learning Models
+### Accomplishments
+- **ETL Optimization:**
+  - Transitioned from **EtLT to ETL**, ensuring transformations occurred before loading.
+  - Standardized title formatting to align across datasets.
+- **Data Upsertion Strategy:**
+  - Introduced **Insert Logic** to prevent missing historical records.
+- **Machine Learning Model Development:**
+  - Built a **KNN-based recommendation system** using cosine similarity.
+  - Engineered features such as **cast, director, genre, and descriptions** for content similarity.
+- **Prefect Pipeline Deployment:**
+  - Automated daily ETL and model training flows using **Prefect Cloud**.
+  - 📌 **Add Prefect Pipeline Screenshot Here**
+- **Dataset Expansion:**
+  - Backfilled data for 2020-2021 to enhance model accuracy.
+
+### Challenges & Solutions
+- **Prefect Deployment Errors:** Fixed entrypoint issues by restructuring folders.
+- **Feature Bias:** Removed runtime as a feature to prevent duration-based recommendations.
+
+🔗 [Phase 2 Presentation Deck](https://www.canva.com/design/DAGWRog81pI/aznUdOi6MgHU1gRZUSaA_g/edit)
+
+---
+
+## 🤖 Phase 3: LLM Integration & UI Development
+### Accomplishments
+- **LLM Integration for Personalized Recommendations:**
+  - Incorporated **Gemini 1.5 Pro** to refine recommendations based on user feedback.
+  - Users can enter preferences to enhance recommendations dynamically.
+- **Automated ML Pipeline:**
+  - Integrated model training and storage into **MotherDuck**.
+  - Archived model metrics for tracking improvements.
+  - 📌 **Add Netflix Pipeline Image**
+- **Streamlit Application Development:**
+  - Built an interactive UI for users to receive recommendations and provide feedback to enhance the recommendations further.
+  - Added interactive visualizations to showcase content trends.
+  - 📌 **Add Netflix Analytics Page Screenshot Here**
+
+### Challenges & Solutions
+- **Model Overfitting:** High accuracy suggested potential overfitting; addressed by balancing feature weights.
+- **Scalability Concerns:** Used **Google Cloud Run & Prefect** to streamline ML deployment.
+
+🔗 [Phase 3 Presentation Deck](https://www.canva.com/design/DAGY5lGoI4o/MsgTkczwbwXbCAuP1FvooQ/edit)
+
+---
+
+## 🔮 Future Scope
+- Complete **Streamlit UI** development for an intuitive recommendation experience.
+- Implement **Sentiment Analysis** on movie descriptions and user reviews.
+- Explore **LLM-based summarization** to enhance metadata for recommendations.
+- Compare **custom ML models vs. LLM-generated recommendations** for performance evaluation.
+
+---
+
+## 🛠️ Tools Used
+| Tool/Platform | Purpose |
+|--------------|---------|
+| **Python** | Data Processing & ML Development |
+| **DuckDB / MotherDuck** | Data Storage & Querying |
+| **Google Cloud Storage** | Storing Data & Model Artifacts |
+| **Google Cloud Run** | Deploying Recommendation Models |
+| **Google Cloud Secret Manager** | Securing API Keys & Credentials |
+| **YouTube API** | Extracting Trailer & Engagement Data |
+| **Netflix API** | Fetching Movie & Show Metadata |
+| **Prefect Cloud** | Automating ETL & ML Pipelines |
+| **Streamlit** | Building User Interface |
+| **Lucidchart** | ERD Diagram |
+| **Apache Superset** | Data Visualization & Analytics |
+| **Gemini 1.5 Pro LLM** | Generating Personalized Recommendations |
+
+---
+
+## 📌 Project Links
+- **GitHub Repository:** [GitHub-Team05](#) (Attach Link)
+- **Streamlit Application:** [Streamlit-Team05](https://streamlit-poc-614716406197.us-central1.run.app/)
