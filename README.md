@@ -1,4 +1,4 @@
-# Netflix Content Recommendation System
+# Netflix Analytics & Recommendation System
 #### *"Comprehensive analytics pipeline integrating data ingestion, machine learning, and LLM-powered personalization to improve user recommendations."*
 
 ![](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/netflix-banner.jpg)
