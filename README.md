@@ -1,7 +1,7 @@
 # Netflix Content Recommendation System
 ### **Coursework: Deploying Analytics Pipeline**
 
-![](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/Netflix-banner-image.png)
+![](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/blob/main/Images/netflix-banner.png)
 
 A repository for a team project on "Deploying Analytics Pipelines" that involves three phases:
 - Phase 1: Data Ops (ETL/ELT and Warehousing)
