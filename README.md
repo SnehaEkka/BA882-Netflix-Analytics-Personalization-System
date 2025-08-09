@@ -48,7 +48,7 @@ Netflix offers a vast content catalog, making it difficult for users to discover
 - **Data Inconsistencies:** Some datasets lacked unique identifiers, requiring fuzzy matching techniques.
 - **Storage Optimization:** Transitioned from CSV-based storage to **MotherDuck** for better scalability.
 
-🔗 [Phase 1 Presentation Deck](https://www.canva.com/design/DAGUIVPifwA/-WOV-uiLMT-rBssArXQrYw/edit)
+🔗 [Phase 1 Presentation Deck](https://www.canva.com/design/DAGUIVPifwA/XS8G7VVNnCyUBYOOcfWJyA/view?utm_content=DAGUIVPifwA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hbed1db69e4)
 
 ### Phase 2: Enhancing ETL & Building Machine Learning Models
 #### Accomplishments
@@ -72,7 +72,7 @@ Netflix offers a vast content catalog, making it difficult for users to discover
 - **Prefect Deployment Errors:** Fixed entrypoint issues by restructuring folders.
 - **Feature Bias:** Removed runtime as a feature to prevent duration-based recommendations.
 
-🔗 [Phase 2 Presentation Deck](https://www.canva.com/design/DAGWRog81pI/aznUdOi6MgHU1gRZUSaA_g/edit)
+🔗 [Phase 2 Presentation Deck](https://www.canva.com/design/DAGWRog81pI/qvuEtNvVOC9sRWiyDqdRhQ/view?utm_content=DAGWRog81pI&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hb78e2e7fa7)
 
 ### Phase 3: LLM Integration & UI Development
 #### Accomplishments
@@ -101,7 +101,7 @@ Netflix offers a vast content catalog, making it difficult for users to discover
 - **Model Overfitting:** High accuracy suggested potential overfitting; addressed by balancing feature weights.
 - **Scalability Concerns:** Used **Google Cloud Run & Prefect** to streamline ML deployment.
 
-🔗 [Phase 3 Presentation Deck](https://www.canva.com/design/DAGY5lGoI4o/MsgTkczwbwXbCAuP1FvooQ/edit)
+🔗 [Phase 3 Presentation Deck](https://www.canva.com/design/DAGY5lGoI4o/ltPp4VTPf0_AY5VUOC4_DQ/view?utm_content=DAGY5lGoI4o&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hcc70496aea)
 
 ## Tools & Tech Stack  
 
