@@ -142,11 +142,6 @@ Netflix offers a vast content catalog, making it difficult for users to discover
   - Jenil Shah - Building the KNN-recommendation system
   - Sneha Ekka - Designing end-to-end pipeline across all phases
 
-## Additional Resources  
-- GitHub Repo: [Link]  
-- Streamlit Demo: [Link]  
-- ERD Diagrams and Superset Dashboard Screenshots included in /docs 
-
 ## 📌 Project Links
 - **GitHub Repository:** [GitHub-Team05](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/tree/main)
 - **Streamlit Application:** [Streamlit-Team05](https://streamlit-poc-614716406197.us-central1.run.app/)
