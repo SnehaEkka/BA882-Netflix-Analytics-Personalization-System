@@ -144,4 +144,4 @@ Netflix offers a vast content catalog, making it difficult for users to discover
 
 ## 📌 Project Links
 - **GitHub Repository:** [GitHub-Team05](https://github.com/SnehaEkka/BA882-Netflix-Analytics-Pipeline/tree/main)
-- **Streamlit Application:** [Streamlit-Team05](https://streamlit-poc-614716406197.us-central1.run.app/)
+- **Streamlit Application:** [Streamlit-Team05](https://streamlit-poc-614716406197.us-central1.run.app/) 
